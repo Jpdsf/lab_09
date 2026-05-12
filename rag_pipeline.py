@@ -1,12 +1,15 @@
 import os
+
 import numpy as np
 import faiss
+from dotenv import load_dotenv
 from sentence_transformers import CrossEncoder
 from google import genai
 from google.genai import types
 
 from dados_medicos import fragmentos_medicos
 
+load_dotenv()
 
 MODELO_EMBEDDING = "gemini-embedding-001"
 EMBEDDING_DIMENSAO_SAIDA = 768
@@ -28,7 +31,8 @@ def criar_cliente_gemini() -> genai.Client:
     if not chave:
         raise EnvironmentError(
             "Variável de ambiente GEMINI_API_KEY não encontrada.\n"
-            "Execute:  export GEMINI_API_KEY='sua-chave-aqui'"
+            "Crie um arquivo .env na raiz do projeto (veja .env.example) ou execute:\n"
+            "  export GEMINI_API_KEY='sua-chave-aqui'"
         )
     return genai.Client(api_key=chave)
 
